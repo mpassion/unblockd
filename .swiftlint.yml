@@ -1,0 +1,19 @@
+disabled_rules:
+  - identifier_name
+  - type_body_length
+  - file_length
+  - function_body_length
+  - cyclomatic_complexity # We have some complex logic in DashboardViewModel
+  - nesting
+  - trailing_whitespace # Xcode handles this, but sometimes noisy in git
+
+excluded:
+  - .build
+  - Package.swift
+  - Tests
+
+line_length:
+  warning: 200
+  error: 300
+
+
