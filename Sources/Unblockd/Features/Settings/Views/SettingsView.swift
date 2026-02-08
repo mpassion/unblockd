@@ -111,7 +111,7 @@ struct SettingsView: View {
                             .foregroundStyle(Color.primary.opacity(0.8))
 
                         VStack(spacing: 1) {
-                            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"))")
+                            Text(AppVersion.displayText)
                             Text("© 2026")
                         }
                         .font(.system(size: 10))

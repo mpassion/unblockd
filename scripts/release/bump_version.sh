@@ -21,6 +21,7 @@ fi
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 INFO_PLIST="$ROOT_DIR/Sources/Unblockd/Info.plist"
+APP_VERSION_SWIFT="$ROOT_DIR/Sources/Unblockd/Core/Configuration/AppVersion.swift"
 
 if [[ ! -f "$INFO_PLIST" ]]; then
   echo "Error: Info.plist not found at $INFO_PLIST"
@@ -38,6 +39,11 @@ fi
 
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$INFO_PLIST"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$INFO_PLIST"
+
+if [[ -f "$APP_VERSION_SWIFT" ]]; then
+  perl -i -pe 's/static let fallbackShortVersion = ".*"/static let fallbackShortVersion = "'"$VERSION"'"/' "$APP_VERSION_SWIFT"
+  perl -i -pe 's/static let fallbackBuildNumber = ".*"/static let fallbackBuildNumber = "'"$BUILD_NUMBER"'"/' "$APP_VERSION_SWIFT"
+fi
 
 echo "Updated version: $VERSION ($BUILD_NUMBER)"
 echo "File: $INFO_PLIST"
