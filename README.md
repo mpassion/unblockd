@@ -38,7 +38,7 @@ All your PRs (Bitbucket + GitHub + GitLab) in one menu bar. Smart filtering show
 
 🎯 **Smart filtering** - Only shows PRs that *you* can act on right now (assigned reviews, your PRs waiting, team blockers)
 
-🤫 **Quiet by design** - Checks every 30-60 minutes. You're in control, not your notifications
+🤫 **Quiet by design** - Checks at configurable intervals (default: 30 min). You're in control, not your notifications
 
 ⏰ **Respects your schedule** - Set office hours (9-5). Badge goes dark after work. Guilt-free evenings
 
@@ -124,7 +124,7 @@ Go to **Preferences → Discovery** to search and add repositories you want to m
 In **Preferences → Schedule**, set your:
 - Active days (e.g., Mon-Fri)
 - Active hours (e.g., 9:00-17:00)
-- Refresh interval (recommended: 30-60 min)
+- Refresh interval (default: 30 min, configurable 15-120 min)
 
 That's it! Unblockd will now quietly monitor your PRs during work hours.
 
@@ -218,7 +218,7 @@ Sources/Unblockd/
 Unblockd is designed to be lightweight and battery-friendly:
 
 - Polling runs **only** during your configured active hours
-- Conservative refresh intervals (minimum 15 min, recommended 30-60 min)
+- Conservative refresh intervals (default 30 min, configurable 15-120 min)
 - Avatars cached in memory with bounded cache size
 - Background refresh paused outside working window
 
@@ -244,7 +244,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 Built with:
 - [Swift](https://swift.org/) - Apple's modern programming language
-- [SwiftUI](https://developer.apple.com/xcode/swiftui/) - Declarative UI framework
+- [SwiftUI](https://developer.apple.com/documentation/swiftui) - Declarative UI framework
 - Love for developer productivity ❤️
 
 ---
