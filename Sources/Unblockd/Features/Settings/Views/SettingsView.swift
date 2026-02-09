@@ -93,7 +93,8 @@ struct SettingsView: View {
                         selectedProvider: settingsViewModel.selectedProvider,
                         isSearching: settingsViewModel.isSearching,
                         availableRepos: settingsViewModel.availableRepos,
-                        viewModel: viewModel,
+                        repoService: repoService,
+                        toggleRepoAction: viewModel.toggleRepo,
                         searchAction: settingsViewModel.searchRepositories
                     )
                     ActiveReposSection(repoService: repoService)
@@ -506,7 +507,8 @@ struct DiscoverySection: View {
     let selectedProvider: ProviderType
     let isSearching: Bool
     let availableRepos: [GitRepository]
-    let viewModel: DashboardViewModel
+    @ObservedObject var repoService: RepositoryService
+    let toggleRepoAction: (GitRepository) -> Void
     let searchAction: () -> Void
 
     var body: some View {
@@ -526,11 +528,11 @@ struct DiscoverySection: View {
                 if !availableRepos.isEmpty {
                     Divider()
                     LazyVStack(spacing: 0) {
-                        ForEach(availableRepos, id: \.id) { repo in
-                            RepoRow(repo: repo, isMonitored: viewModel.isMonitored(repo: repo)) {
-                                viewModel.toggleRepo(repo)
+                        ForEach(availableRepos, id: \.monitoringKey) { repo in
+                            RepoRow(repo: repo, isMonitored: repoService.isMonitored(id: repo.id, provider: repo.provider)) {
+                                toggleRepoAction(repo)
                             }
-                            if repo.id != availableRepos.last?.id { Divider().padding(.leading, 40) }
+                            if repo.monitoringKey != availableRepos.last?.monitoringKey { Divider().padding(.leading, 40) }
                         }
                     }
                 } else if isSearching {

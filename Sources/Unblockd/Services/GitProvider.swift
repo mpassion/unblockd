@@ -26,6 +26,10 @@ struct GitRepository: Identifiable, Codable {
     let fullName: String // owner/slug
     let url: URL?
     let provider: ProviderType
+
+    var monitoringKey: String {
+        "\(provider.rawValue):\(id)"
+    }
 }
 
 protocol GitProvider {

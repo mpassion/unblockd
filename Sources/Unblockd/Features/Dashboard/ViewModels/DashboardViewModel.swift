@@ -29,6 +29,7 @@ class DashboardViewModel: ObservableObject {
     private var providers: [ProviderType: any GitProvider] = [:]
 
     private var pollingTask: Task<Void, Never>?
+    private var repositoriesRefreshTask: Task<Void, Never>?
     private var cancellables = Set<AnyCancellable>()
 
     private var snoozedItems: [String: Date] = [:]
@@ -72,7 +73,7 @@ class DashboardViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 Log.info("📦 Repositories changed, triggering auto-refresh...", category: Log.data)
-                Task { await self?.refresh(force: true) }
+                self?.scheduleRepositoriesRefresh()
             }
             .store(in: &cancellables)
 
@@ -126,6 +127,7 @@ class DashboardViewModel: ObservableObject {
     }
 
     deinit {
+        repositoriesRefreshTask?.cancel()
         Log.info("🗑️ [Lifecycle] DashboardViewModel deinit", category: Log.general)
     }
 
@@ -225,6 +227,16 @@ class DashboardViewModel: ObservableObject {
             await refresh(force: true)
         } else {
             Log.info("💤 Skipping refresh (Outside active hours)", category: Log.data)
+        }
+    }
+
+    private func scheduleRepositoriesRefresh() {
+        repositoriesRefreshTask?.cancel()
+        repositoriesRefreshTask = Task { [weak self] in
+            // Let UI update first and coalesce quick add/remove bursts from settings.
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            guard !Task.isCancelled else { return }
+            await self?.refresh(force: true)
         }
     }
 
