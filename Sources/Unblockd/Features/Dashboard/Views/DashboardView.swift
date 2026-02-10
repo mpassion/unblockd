@@ -119,7 +119,7 @@ struct DashboardView: View {
                             PRGroup(title: Strings.Dashboard.Groups.waiting, items: items.filter { $0.state == .waiting && !$0.isSnoozed }, color: .ubStatusBlue, inactive: true, viewModel: viewModel)
                         }
                         if showMyPRs {
-                            PRGroup(title: Strings.Dashboard.Groups.myPRs, items: items.filter { $0.state == .stale && !$0.isSnoozed }, color: .ubStatusGreen, viewModel: viewModel)
+                            PRGroup(title: Strings.Dashboard.Groups.myPRs, items: items.filter { $0.state == .stale && !$0.isSnoozed }, color: .ubPrimary, viewModel: viewModel)
                         }
                         if showTeam {
                             PRGroup(title: Strings.Dashboard.Groups.other, items: items.filter { $0.state == .team && !$0.isSnoozed }, color: .secondary, inactive: true, viewModel: viewModel)
@@ -286,7 +286,7 @@ struct PRGroup: View {
 
     var body: some View {
         if !items.isEmpty {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text("\(title) (\(items.count))")
                         .font(.system(size: 10, weight: .bold))
@@ -358,31 +358,45 @@ struct ModernPRRow: View {
     let themeColor: Color
 
     @State private var isHovering = false
+    @Environment(\.colorScheme) private var colorScheme
+
+    private let cornerRadius: CGFloat = 12
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Rectangle()
-                .fill(isHovering ? Color.primary.opacity(0.05) : Color.clear)
-                .ubCard()
-
-            Rectangle()
-                .fill(themeColor)
-                .frame(width: 4)
-                .cornerRadius(2, corners: [.topLeft, .bottomLeft])
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(isHovering ? Color.primary.opacity(0.05) : Color.ubCard)
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.2 : 0.05), radius: 2, x: 0, y: 1)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .stroke(colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.05), lineWidth: 1)
+                )
+                .overlay(alignment: .leading) {
+                    // Draw accent as part of the same rounded border for clean anti-aliased corners.
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .strokeBorder(themeColor.opacity(0.95), lineWidth: 2)
+                        .mask(
+                            HStack(spacing: 0) {
+                                Rectangle()
+                                    .frame(width: 6)
+                                Spacer(minLength: 0)
+                            }
+                        )
+                }
 
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: 5) {
                     Text(item.title)
                         .font(.system(size: 14, weight: .semibold))
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    HStack(spacing: 8) {
-                        HStack(spacing: 2) {
+                    HStack(spacing: 6) {
+                        HStack(spacing: 3) {
                             Image(systemName: "terminal")
                             Text(item.repository)
                         }
-                        .font(.system(size: 11))
+                        .font(.system(size: 10.5))
                         .foregroundStyle(.secondary)
 
                         Text("•")
@@ -390,7 +404,7 @@ struct ModernPRRow: View {
                             .foregroundStyle(.tertiary)
 
                         Text(item.lastActivity.formatted(.relative(presentation: .named).locale(Locale(identifier: "en_US"))))
-                            .font(.system(size: 11))
+                            .font(.system(size: 10.5))
                             .foregroundStyle(.secondary)
                     }
 
@@ -411,9 +425,10 @@ struct ModernPRRow: View {
                              Image(systemName: "exclamationmark.triangle.fill")
                              Text("NEEDS WORK")
                          }
-                         .font(.system(size: 10, weight: .bold))
+                         .font(.system(size: 9.5, weight: .bold))
                          .foregroundStyle(Color.ubStatusOrange)
-                         .padding(2)
+                         .padding(.horizontal, 6)
+                         .padding(.vertical, 2)
                          .background(Color.ubStatusOrange.opacity(0.1))
                          .cornerRadius(4)
                     } else if item.approvalCount > 0 {
@@ -422,9 +437,10 @@ struct ModernPRRow: View {
                              let total = max(item.reviewerCount, item.approvalCount)
                              Text("APPROVED (\(item.approvalCount)/\(total))")
                          }
-                         .font(.system(size: 10, weight: .bold))
+                         .font(.system(size: 9.5, weight: .bold))
                          .foregroundStyle(Color.ubStatusGreen)
-                         .padding(2)
+                         .padding(.horizontal, 6)
+                         .padding(.vertical, 2)
                          .background(Color.ubStatusGreen.opacity(0.1))
                          .cornerRadius(4)
                     } else if themeColor == .ubStatusGreen {
@@ -433,14 +449,15 @@ struct ModernPRRow: View {
                              let total = max(item.reviewerCount, item.approvalCount)
                              Text("OPEN (\(item.approvalCount)/\(total))")
                          }
-                         .font(.system(size: 10, weight: .bold))
+                         .font(.system(size: 9.5, weight: .bold))
                          .foregroundStyle(Color.secondary)
-                         .padding(2)
+                         .padding(.horizontal, 6)
+                         .padding(.vertical, 2)
                          .background(Color.secondary.opacity(0.1))
                          .cornerRadius(4)
                     }
                 }
-                .padding(.leading, 12)
+                .padding(.leading, 10)
 
                 Spacer()
 
@@ -450,9 +467,10 @@ struct ModernPRRow: View {
                 }
                 .shadow(radius: 1)
             }
-            .padding(10)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
         }
-        .frame(minHeight: 60)
+        .frame(minHeight: 56)
         .onHover { isHovering = $0 }
     }
 }
