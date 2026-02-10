@@ -77,6 +77,26 @@ All your PRs (Bitbucket + GitHub + GitLab) in one menu bar. Smart filtering show
 
 ---
 
+## Screenshots
+
+### Dashboard
+
+<p align="center">
+  <img src="docs/assets/screenshots/readme/dashboard-menubar-badge.png" alt="Unblockd menu bar badge and popup" width="235" />
+  <img src="docs/assets/screenshots/readme/dashboard-main.png" alt="Unblockd dashboard main" width="235" />
+  <img src="docs/assets/screenshots/readme/dashboard-changes-requested.png" alt="Unblockd waiting state with changes requested" width="235" />
+</p>
+
+### Preferences
+
+<p align="center">
+  <img src="docs/assets/screenshots/readme/settings-behavior-schedule.png" alt="Preferences behavior and schedule" width="235" />
+  <img src="docs/assets/screenshots/readme/settings-menu-content.png" alt="Preferences menu content controls" width="235" />
+  <img src="docs/assets/screenshots/readme/settings-account-repositories.png" alt="Preferences account and repository discovery" width="235" />
+</p>
+
+---
+
 ## Installation
 
 ### Homebrew (Recommended)
