@@ -1,12 +1,12 @@
-# Unblockd
+<h1>
+  <img src="Sources/Unblockd/Resources/Assets.xcassets/AppIcon.appiconset/icon_16x16@2x.png" alt="Unblockd app icon" width="40" height="40" align="absmiddle" /> Unblockd
+</h1>
 
-> **Pull Requests are a state, not an event.**
+<p><em>Pull Requests are a state, not an event.</em></p>
 
 Stop letting PRs rot in silence. Unblockd is a native macOS menu bar app that shows you *exactly* which Pull Requests need your attention - without the notification spam.
 
-**The only PR monitor for Bitbucket, GitHub, and GitLab. All in one place.**
-
-Native macOS PR monitor for Bitbucket, GitHub, and GitLab.  
+**Unified PR monitor for Bitbucket Cloud, GitHub, and GitLab.com.**  
 No notification spam. No context switching. Just your PRs.
 
 ![macOS](https://img.shields.io/badge/macOS-13.0+-blue.svg)
@@ -59,21 +59,22 @@ All your PRs (Bitbucket + GitHub + GitLab) in one menu bar. Smart filtering show
 
 ### Multi-Provider Support
 
-- ✓ **Bitbucket Cloud** - Finally, a modern tool for Bitbucket
-- ✓ **GitHub** - Public and private repositories
-- ✓ **GitLab** - GitLab.com (cloud)
+- Bitbucket Cloud - Finally, a modern tool for Bitbucket
+- GitHub - Public and private repositories
+- GitLab - GitLab.com (cloud)
 
 ### Workflow Features
 
-- ✓ Draft PR detection across all providers
-- ✓ Repository discovery and monitoring
-- ✓ Active days/hours scheduling
-- ✓ Configurable refresh intervals (15-120 min)
-- ✓ Launch at login
-- ✓ Secure token storage in macOS Keychain
-- ✓ Local rate-limit tracking per provider
-- ✓ Battery-aware polling
-- ✓ Lightweight memory footprint
+- Draft PR detection across all providers
+- Repository discovery and monitoring
+- Adapts automatically to macOS light/dark appearance
+- Active days/hours scheduling
+- Configurable refresh intervals (15-120 min)
+- Launch at login
+- Secure token storage in macOS Keychain
+- Local rate-limit tracking per provider
+- Battery-aware polling
+- Lightweight memory footprint
 
 ---
 
@@ -104,6 +105,9 @@ All your PRs (Bitbucket + GitHub + GitLab) in one menu bar. Smart filtering show
 ```bash
 brew install --cask mpassion/tap/unblockd
 ```
+
+> If macOS warns that it cannot verify the app, use right-click **Open** once.  
+> Quick steps are in [macOS Security Note](#macos-security-note).
 
 ### Build from Source
 
@@ -205,7 +209,7 @@ If macOS blocks app launch:
 ### Prerequisites
 
 - macOS 13.0+
-- Xcode 15.1+ (Swift 6.2 support)
+- Xcode with Swift 6.2 (or newer)
 
 ### Testing
 
