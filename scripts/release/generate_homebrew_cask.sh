@@ -73,7 +73,7 @@ cask "unblockd" do
 
   url "https://github.com/mpassion/unblockd/releases/download/v#{version}/Unblockd-#{version}.zip"
   name "Unblockd"
-  desc "macOS menu bar app for tracking pull requests"
+  desc "Menu bar pull request monitor for Bitbucket, GitHub, and GitLab"
   homepage "https://github.com/mpassion/unblockd"
 
   app "Unblockd.app"
