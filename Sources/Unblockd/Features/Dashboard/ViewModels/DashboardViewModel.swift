@@ -27,7 +27,6 @@ class DashboardViewModel: ObservableObject {
 
     let repoService: RepositoryService
     private var providers: [ProviderType: any GitProvider] = [:]
-    private let demoMode: Bool
 
     private var pollingTask: Task<Void, Never>?
     private var repositoriesRefreshTask: Task<Void, Never>?
@@ -42,23 +41,16 @@ class DashboardViewModel: ObservableObject {
         let ghToken: String
         let glToken: String
     }
-    private static let demoTooltip = "Demo mode: using mock repositories and PRs"
 
     init(
         repoService: RepositoryService = RepositoryService(),
-        lifecycle: LifecycleMode = .active,
-        demoMode: Bool = false
+        lifecycle: LifecycleMode = .active
     ) {
         self.repoService = repoService
-        self.demoMode = demoMode
 
         self.providers[.bitbucket] = BitbucketClient()
         self.providers[.github] = GitHubClient()
         self.providers[.gitlab] = GitLabClient()
-
-        if demoMode {
-            repoService.monitoredRepositories = DashboardDemoData.monitoredRepositories
-        }
 
         if let data = UserDefaults.standard.dictionary(forKey: AppConfig.Keys.snoozedPRs) as? [String: Date] {
             let now = Date()
@@ -142,9 +134,6 @@ class DashboardViewModel: ObservableObject {
     // MARK: - API Actions
 
     func searchRepositories(query: String, provider: ProviderType) async throws -> [GitRepository] {
-        if demoMode {
-            return DashboardDemoData.searchRepositories(query: query, provider: provider)
-        }
         guard let p = providers[provider] else { return [] }
         return try await p.fetchRepositories(query: query)
     }
@@ -252,12 +241,6 @@ class DashboardViewModel: ObservableObject {
     }
 
     private func checkActiveHours() {
-        if demoMode {
-            self.isSleeping = false
-            self.updateTooltipText()
-            return
-        }
-
         let startHour = UserDefaults.standard.object(forKey: AppConfig.Keys.startHour) as? Int ?? AppConfig.Defaults.startHour
         let endHour = UserDefaults.standard.object(forKey: AppConfig.Keys.endHour) as? Int ?? AppConfig.Defaults.endHour
 
@@ -287,11 +270,6 @@ class DashboardViewModel: ObservableObject {
     }()
 
     private func updateTooltipText() {
-        if demoMode {
-            self.tooltipText = Self.demoTooltip
-            return
-        }
-
         if isSleeping {
             let startHour = UserDefaults.standard.object(forKey: AppConfig.Keys.startHour) as? Int ?? AppConfig.Defaults.startHour
             let activeDays: [Int] = (UserDefaults.standard.array(forKey: AppConfig.Keys.activeDays) as? [Int]) ?? AppConfig.Defaults.activeDays
@@ -345,15 +323,6 @@ class DashboardViewModel: ObservableObject {
         isRefreshing = true
         self.lastError = nil
         defer { isRefreshing = false }
-
-        if demoMode {
-            self.lastRawItems = DashboardDemoData.items(for: repoService.monitoredRepositories)
-            applyFilters()
-            self.lastUpdated = Date()
-            updateTooltipText()
-            Log.info("✅ Demo refresh complete. \(self.items.count) visible PRs.", category: Log.data)
-            return
-        }
 
         let monitoredRepos = repoService.monitoredRepositories
         guard !monitoredRepos.isEmpty else {
