@@ -102,7 +102,7 @@ struct SettingsView: View {
                     Spacer().frame(height: 20)
 
                     VStack(spacing: 4) {
-                        Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                        Image(nsImage: NSApp.applicationIconImage)
                             .resizable()
                             .frame(width: 32, height: 32)
                             .opacity(0.8)

@@ -53,6 +53,8 @@ fi
 DIST_DIR="$ROOT_DIR/dist"
 APP_DIR="$DIST_DIR/${APP_NAME}.app"
 ZIP_PATH="$DIST_DIR/${APP_NAME}-${VERSION}.zip"
+ICON_NAME="AppIcon.icns"
+ICON_SOURCE="$ROOT_DIR/Sources/Unblockd/Resources/$ICON_NAME"
 
 rm -rf "$APP_DIR" "$ZIP_PATH" "$ZIP_PATH.sha256"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
@@ -60,6 +62,9 @@ mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 cp "$INFO_PLIST" "$APP_DIR/Contents/Info.plist"
 cp "$BIN_PATH" "$APP_DIR/Contents/MacOS/$APP_NAME"
 cp -R "$RESOURCE_BUNDLE" "$APP_DIR/Contents/Resources/"
+if [[ -f "$ICON_SOURCE" ]]; then
+  cp "$ICON_SOURCE" "$APP_DIR/Contents/Resources/$ICON_NAME"
+fi
 chmod +x "$APP_DIR/Contents/MacOS/$APP_NAME"
 
 set_plist_key() {
@@ -80,6 +85,9 @@ set_plist_key "CFBundleDisplayName" string "$APP_NAME"
 set_plist_key "CFBundlePackageType" string "APPL"
 set_plist_key "NSPrincipalClass" string "NSApplication"
 set_plist_key "LSMinimumSystemVersion" string "13.0"
+if [[ -f "$ICON_SOURCE" ]]; then
+  set_plist_key "CFBundleIconFile" string "AppIcon"
+fi
 
 ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "$ZIP_PATH"
 shasum -a 256 "$ZIP_PATH" | awk '{print $1}' > "$ZIP_PATH.sha256"
