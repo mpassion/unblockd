@@ -1,5 +1,5 @@
 <h1>
-  <img src="Sources/Unblockd/Resources/Assets.xcassets/AppIcon.appiconset/icon_16x16@2x.png" alt="Unblockd app icon" width="40" height="40" align="absmiddle" /> Unblockd
+  <img src="Sources/Unblockd/Resources/Assets.xcassets/AppIcon.appiconset/icon_128x128.png" alt="Unblockd app icon" width="40" height="40" align="absmiddle" /> Unblockd
 </h1>
 
 <p><em>Pull Requests are a state, not an event.</em></p>
