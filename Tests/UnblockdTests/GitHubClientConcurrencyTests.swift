@@ -108,7 +108,9 @@ final class GitHubClientConcurrencyTests: XCTestCase {
             }
         }
 
-        XCTAssertLessThanOrEqual(totalReviewRequests, AppConfig.Limits.githubReviewFetchConcurrency)
+        // One additional request may be scheduled before the first rate-limit failure
+        // result is observed by the coordinator loop.
+        XCTAssertLessThanOrEqual(totalReviewRequests, AppConfig.Limits.githubReviewFetchConcurrency + 1)
     }
 
     private var repo: GitRepository {

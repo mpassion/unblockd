@@ -4,7 +4,11 @@ import SwiftUI
 struct UnblockdApp: App {
     @AppStorage(AppConfig.Keys.badgeCountMode) private var badgeCountMode: BadgeCountMode = .actionable
     @AppStorage(AppConfig.Keys.showMenuTooltip) private var showMenuTooltip = true
-    @StateObject private var viewModel = DashboardViewModel()
+    @StateObject private var viewModel: DashboardViewModel = {
+        let demoMode = AppRuntime.isDemoMode
+        let repoService = RepositoryService(persistChanges: !demoMode)
+        return DashboardViewModel(repoService: repoService, demoMode: demoMode)
+    }()
 
     var body: some Scene {
         MenuBarExtra {

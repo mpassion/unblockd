@@ -309,6 +309,7 @@ struct PRGroup: View {
                             .contentShape(Rectangle())
                     })
                     .buttonStyle(.plain)
+                    .focusable(false)
                     .opacity(inactive ? 0.7 : 1.0)
                     .grayscale(inactive ? 0.5 : 0)
                     .contextMenu {
@@ -423,7 +424,7 @@ struct ModernPRRow: View {
                     if item.hasChangesRequested {
                          HStack(spacing: 4) {
                              Image(systemName: "exclamationmark.triangle.fill")
-                             Text("NEEDS WORK")
+                             Text("CHANGES REQUESTED")
                          }
                          .font(.system(size: 9.5, weight: .bold))
                          .foregroundStyle(Color.ubStatusOrange)

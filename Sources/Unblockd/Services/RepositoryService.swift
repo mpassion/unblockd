@@ -4,8 +4,10 @@ class RepositoryService: ObservableObject {
     @Published var monitoredRepositories: [MonitoredRepository] = []
 
     private let storageKey = AppConfig.Keys.monitoredRepos
+    private let persistChanges: Bool
 
-    init() {
+    init(persistChanges: Bool = true) {
+        self.persistChanges = persistChanges
         load()
     }
 
@@ -41,12 +43,18 @@ class RepositoryService: ObservableObject {
     }
 
     private func save() {
+        guard persistChanges else { return }
         if let encoded = try? JSONEncoder().encode(monitoredRepositories) {
             UserDefaults.standard.set(encoded, forKey: storageKey)
         }
     }
 
     private func load() {
+        guard persistChanges else {
+            monitoredRepositories = []
+            return
+        }
+
         if let data = UserDefaults.standard.data(forKey: storageKey),
            let decoded = try? JSONDecoder().decode([MonitoredRepository].self, from: data) {
             monitoredRepositories = decoded
