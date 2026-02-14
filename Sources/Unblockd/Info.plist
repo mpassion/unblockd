@@ -5,9 +5,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.appchance.unblockd</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.2</string>
+	<string>0.9.3</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>LSUIElement</key>
 	<true/>
 </dict>
