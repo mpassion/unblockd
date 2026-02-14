@@ -25,8 +25,6 @@ class GitHubClient: GitProvider, @unchecked Sendable {
         self.token = token
     }
 
-    // MARK: - API Calls
-
     private func makeRequest(to endpoint: String) async throws -> URLRequest {
         let urlString = endpoint.hasPrefix("http") ? endpoint : baseURL + endpoint
         guard let url = URL(string: urlString) else {
@@ -43,8 +41,6 @@ class GitHubClient: GitProvider, @unchecked Sendable {
 
         return request
     }
-
-    // MARK: - GitProvider Implementation
 
     func fetchCurrentUser() async throws -> GitUser {
         let request = try await makeRequest(to: "/user")
@@ -169,8 +165,6 @@ class GitHubClient: GitProvider, @unchecked Sendable {
             )
         }
     }
-
-    // MARK: - Private Helpers
 
     private func splitRepositoryFullName(_ fullName: String) throws -> (owner: String, repoName: String) {
         let components = fullName.split(separator: "/", maxSplits: 1).map(String.init)

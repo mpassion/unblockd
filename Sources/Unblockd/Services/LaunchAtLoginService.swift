@@ -19,7 +19,6 @@ class LaunchAtLoginService: ObservableObject {
         } catch {
             Log.error("Failed to toggle Launch at Login", error: error, category: Log.general)
         }
-        // Always sync state with reality
         self.isEnabled = SMAppService.mainApp.status == .enabled
     }
 }

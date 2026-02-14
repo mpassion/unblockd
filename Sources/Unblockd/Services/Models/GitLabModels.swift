@@ -1,6 +1,5 @@
 import Foundation
 
-// MARK: - GitLab User
 struct GitLabUser: Codable {
     let id: Int
     let username: String
@@ -13,7 +12,6 @@ struct GitLabUser: Codable {
     }
 }
 
-// MARK: - GitLab Project (Repository)
 struct GitLabProject: Codable {
     let id: Int
     let name: String
@@ -27,7 +25,6 @@ struct GitLabProject: Codable {
     }
 }
 
-// MARK: - GitLab Merge Request (PR)
 struct GitLabMergeRequest: Codable {
     let id: Int
     let iid: Int
@@ -48,7 +45,6 @@ struct GitLabMergeRequest: Codable {
     let detailedMergeStatus: String?
     let hasConflicts: Bool
 
-    // Additional fields for detail view
     let draft: Bool
     let workInProgress: Bool
 
@@ -72,7 +68,6 @@ struct GitLabMergeRequest: Codable {
     }
 }
 
-// MARK: - GitLab Approval State
 struct GitLabApprovalState: Codable {
     let id: Int
     let iid: Int
@@ -96,7 +91,6 @@ struct GitLabApprover: Codable {
     let user: GitLabUser
 }
 
-// MARK: - GitLab Reviewer State
 struct GitLabReviewerStatus: Codable {
     let state: String
     let user: GitLabUser

@@ -1,7 +1,5 @@
 import Foundation
 
-// MARK: - API Response Models (DTOs)
-
 struct BitbucketPagedResponse<T: Decodable>: Decodable {
     let size: Int?
     let page: Int?
@@ -9,7 +7,6 @@ struct BitbucketPagedResponse<T: Decodable>: Decodable {
     let values: [T]
 }
 
-// MARK: - Shared Link Models
 struct BitbucketLinks: Decodable {
     let html: BitbucketLink?
     let avatar: BitbucketLink?
@@ -18,8 +15,6 @@ struct BitbucketLinks: Decodable {
 struct BitbucketLink: Decodable {
     let href: String
 }
-
-// MARK: - Models
 
 struct BitbucketRepository: Decodable, Identifiable {
     let uuid: String

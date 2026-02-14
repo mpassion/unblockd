@@ -71,7 +71,6 @@ extension PRItem {
             self.url = nil
         }
 
-        // Use draft field from Bitbucket Cloud API if available
         self.isDraft = apiPR.draft ?? false
     }
 }
@@ -84,7 +83,7 @@ extension PRItem {
             repository: "mobile-app",
             author: "Jane Doe",
             avatarURL: nil,
-            lastActivity: Date().addingTimeInterval(-3600), // 1h ago
+            lastActivity: Date().addingTimeInterval(-3600),
             state: .needsReview,
             hasChangesRequested: false,
             approvalCount: 1,
@@ -98,7 +97,7 @@ extension PRItem {
             repository: "backend-api",
             author: "John Smith",
             avatarURL: nil,
-            lastActivity: Date().addingTimeInterval(-172800 - 3600), // 2 days 1h ago
+            lastActivity: Date().addingTimeInterval(-172800 - 3600),
             state: .stale,
             hasChangesRequested: true,
             approvalCount: 0,
@@ -112,7 +111,7 @@ extension PRItem {
             repository: "docs",
             author: "Mike",
             avatarURL: nil,
-            lastActivity: Date().addingTimeInterval(-300), // 5 min ago
+            lastActivity: Date().addingTimeInterval(-300),
             state: .waiting,
             hasChangesRequested: false,
             approvalCount: 2,

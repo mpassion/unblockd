@@ -1,6 +1,5 @@
 import SwiftUI
 
-// Helper for rounding specific corners
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: RectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
@@ -28,7 +27,6 @@ struct RectCorner: OptionSet, Sendable {
     static let allCorners: RectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
 }
 
-// Minimal replacement for UIBezierPath logic using CGPath
 struct UIBezierPathWrapper {
     static func roundedRect(_ rect: CGRect, byRoundingCorners corners: RectCorner, cornerRadius: CGFloat) -> CGPath {
         let path = CGMutablePath()

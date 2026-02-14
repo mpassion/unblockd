@@ -20,7 +20,7 @@ enum AppConfig {
         static let rateLimitGitHub = "rateLimitGitHub"
         static let rateLimitGitLab = "rateLimitGitLab"
         static let gitlabToken = "gitlab_token"
-        static let gitlabHost = "gitlab_host" // For future self-hosted support
+        static let gitlabHost = "gitlab_host"
         static let badgeCountMode = "badgeCountMode"
         static let showMenuTooltip = "showMenuTooltip"
     }
@@ -30,7 +30,7 @@ enum AppConfig {
         static let minimumRefreshInterval = 15
         static let startHour = 9
         static let endHour = 17
-        static let activeDays: [Int] = [2, 3, 4, 5, 6] // Monday to Friday (Calendar.Component.weekday)
+        static let activeDays: [Int] = [2, 3, 4, 5, 6]
         static let mergeLookbackDays = 7
         static let rateLimitBitbucket = 1000
         static let rateLimitGitHub = 5000
@@ -43,13 +43,13 @@ enum AppConfig {
     }
 
     enum Limits {
-        static let searchResultLimit = 50 // Default Page Size for repos
+        static let searchResultLimit = 50
         static let githubSearchLimit = 100
         static let githubReviewFetchConcurrency = 6
     }
 
     enum Timeouts {
-        static let bitbucketPagingDelayNanoseconds: UInt64 = 200_000_000 // 0.2s
+        static let bitbucketPagingDelayNanoseconds: UInt64 = 200_000_000
     }
 }
 

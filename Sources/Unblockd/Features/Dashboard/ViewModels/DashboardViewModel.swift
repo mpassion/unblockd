@@ -131,8 +131,6 @@ class DashboardViewModel: ObservableObject {
         Log.info("🗑️ [Lifecycle] DashboardViewModel deinit", category: Log.general)
     }
 
-    // MARK: - API Actions
-
     func searchRepositories(query: String, provider: ProviderType) async throws -> [GitRepository] {
         guard let p = providers[provider] else { return [] }
         return try await p.fetchRepositories(query: query)
@@ -149,8 +147,6 @@ class DashboardViewModel: ObservableObject {
     func isMonitored(repo: GitRepository) -> Bool {
         return repoService.isMonitored(id: repo.id, provider: repo.provider)
     }
-
-    // MARK: - Snooze Logic
 
     func snooze(prID: String, duration: TimeInterval) {
         let expiration = Date().addingTimeInterval(duration)
@@ -180,8 +176,6 @@ class DashboardViewModel: ObservableObject {
     private func saveSnoozedItems() {
         UserDefaults.standard.set(snoozedItems, forKey: AppConfig.Keys.snoozedPRs)
     }
-
-    // MARK: - Polling
 
     func startPolling() {
         pollingTask?.cancel()

@@ -31,7 +31,6 @@ struct AvatarView: View {
         .onDisappear {
             loader.cancel()
         }
-        // If URL changes for same component (cell reuse simulation)
         .onChange(of: url) { newUrl in
             loader.load(url: newUrl)
         }

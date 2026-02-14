@@ -26,7 +26,6 @@ class AvatarService {
             return cached
         }
 
-        // Use a download task to avoid freezing if main thread calls this improperly (though it's async)
         let (data, _) = try await URLSession.shared.data(from: url)
         guard let originalImage = NSImage(data: data) else {
             throw NSError(domain: "AvatarService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid image data"])
@@ -50,7 +49,6 @@ class AvatarService {
             newSize = CGSize(width: maxSize.height * aspectRatio, height: maxSize.height)
         }
 
-        // If original is smaller, keep it
         if originalSize.width <= newSize.width && originalSize.height <= newSize.height {
             return image
         }
@@ -99,8 +97,6 @@ class AvatarLoader: ObservableObject {
             }
         }
     }
-
-    // deinit handled by ARC and weak self usage in Task
 
     func cancel() {
         fetchTask?.cancel()

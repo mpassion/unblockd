@@ -3,37 +3,31 @@ import Foundation
 struct PRRulesEngine {
     let currentUserUUID: String
 
-    // MARK: - Public API
-
     func classify(pr: BitbucketPR, isDraft: Bool = false) -> PRItem.PRState {
-        // Handle drafts
         if isDraft {
             if isAuthor(of: pr) {
-                return .stale // My draft
+                return .stale
             }
-            return .team // Others' drafts are low priority
+            return .team
         }
 
         if pr.state == "MERGED" {
-             // Check if I should have reviewed this
-             if let reviewState = determineReviewStatus(for: pr), reviewState == .needsReview {
-                 return .mergedNeedsReview
-             }
-             return .team // Or ignore? For now team/other.
+            if let reviewState = determineReviewStatus(for: pr), reviewState == .needsReview {
+                return .mergedNeedsReview
+            }
+            return .team
         }
 
         if isAuthor(of: pr) {
-            return .stale // "My PRs" section
+            return .stale
         }
 
         if let reviewState = determineReviewStatus(for: pr) {
             return reviewState
         }
 
-        return .team // "Other / Team" section
+        return .team
     }
-
-    // MARK: - Private Helpers
 
     private func isAuthor(of pr: BitbucketPR) -> Bool {
         guard let authorUUID = pr.author.uuid else { return false }
@@ -51,25 +45,21 @@ struct PRRulesEngine {
 
         guard isAssigned else { return nil }
 
-        // I am assigned, now check if I've already acted on it
-        if hasactedOn(pr) {
+        if hasActedOn(pr) {
             return .waiting
         }
 
-        // Assigned and pending action
         return .needsReview
     }
 
-    private func hasactedOn(_ pr: BitbucketPR) -> Bool {
+    private func hasActedOn(_ pr: BitbucketPR) -> Bool {
         guard let participants = pr.participants else { return false }
         let myUUID = normalize(currentUserUUID)
 
-        // Find my participation record
         if let myStat = participants.first(where: { p in
             guard let id = p.user.uuid else { return false }
             return normalize(id) == myUUID
         }) {
-            // "Acted" means Approved OR Requested Changes
             return myStat.approved || myStat.state == .changes_requested
         }
 

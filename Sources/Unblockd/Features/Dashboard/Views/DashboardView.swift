@@ -17,7 +17,6 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // MARK: Header
                 HStack {
                     HStack(spacing: 6) {
                         AppIcon(size: 24)
@@ -81,7 +80,6 @@ struct DashboardView: View {
                 Divider()
                     .opacity(0.5)
 
-                // MARK: Content
                 ScrollView {
                     VStack(spacing: 16) {
 
@@ -148,7 +146,6 @@ struct DashboardView: View {
                 }
                 .ubBackground()
 
-                // MARK: Footer
                 HStack {
                     if rateTracker.isLimited {
                         HStack(spacing: 4) {
@@ -251,12 +248,10 @@ struct DashboardView: View {
         case .bitbucket:
             Image(systemName: "bitcoinsign.circle.fill")
         case .gitlab:
-            Image(systemName: "externaldrive.fill.badge.checkmark") // Placeholder for GitLab
+            Image(systemName: "externaldrive.fill.badge.checkmark")
         }
     }
 }
-
-// MARK: - Components
 
 struct HeaderButton: View {
     let icon: String
@@ -322,12 +317,12 @@ struct PRGroup: View {
                                 }
                             } else {
                                 Button {
-                                    viewModel.snooze(prID: item.id, duration: 7200) // 2h
+                                    viewModel.snooze(prID: item.id, duration: 7200)
                                 } label: {
                                     Label(Strings.Dashboard.ContextMenu.snooze2h, systemImage: "clock")
                                 }
                                 Button {
-                                    viewModel.snooze(prID: item.id, duration: 14400) // 4h
+                                    viewModel.snooze(prID: item.id, duration: 14400)
                                 } label: {
                                     Label(Strings.Dashboard.ContextMenu.snooze4h, systemImage: "clock.arrow.circlepath")
                                 }

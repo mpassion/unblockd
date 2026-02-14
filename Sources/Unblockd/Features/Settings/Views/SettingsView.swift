@@ -29,7 +29,6 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: Header
             HStack {
                 Button(action: {
                     dismiss()
@@ -61,7 +60,6 @@ struct SettingsView: View {
 
             Divider().opacity(0.5)
 
-            // MARK: Content
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 32) {
                     BehaviorSection(launchService: launchService, refreshIntervalMinutes: $refreshIntervalMinutes)
@@ -193,8 +191,6 @@ struct SettingsView: View {
     }
 }
 
-// MARK: - Sections
-
 struct BehaviorSection: View {
     let launchService: LaunchAtLoginService
     @Binding var refreshIntervalMinutes: Int
@@ -217,7 +213,7 @@ struct BehaviorSection: View {
                 Divider().padding(.leading, 40)
 
                 HStack {
-                    Image(systemName: "app.badge") // Icon for Badge
+                    Image(systemName: "app.badge")
                         .foregroundStyle(Color.secondary)
                         .frame(width: 24)
                     Text("Badge Count")

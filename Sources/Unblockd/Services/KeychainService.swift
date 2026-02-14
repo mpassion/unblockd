@@ -24,7 +24,6 @@ struct KeychainService {
         let status = SecItemAdd(query as CFDictionary, nil)
 
         if status == errSecDuplicateItem {
-            // Item already exists, thus update it.
             let newQuery: [String: Any] = [
                 kSecClass as String: kSecClassGenericPassword,
                 kSecAttrService as String: serviceName,

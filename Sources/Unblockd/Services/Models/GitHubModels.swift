@@ -28,23 +28,19 @@ struct GitHubPR: Codable {
     let title: String
     let state: String
     let html_url: String
-    let user: GitHubUser // Author
+    let user: GitHubUser
     let created_at: String
     let updated_at: String
     let draft: Bool?
 
-    // Details (might be partial in search)
     let requested_reviewers: [GitHubUser]?
     let assignees: [GitHubUser]?
 
-    // Links for detail fetching if needed
     let url: String
 
-    // Merged info
     let merged_at: String?
 }
 
-// Search response
 struct GitHubSearchResponse<T: Codable>: Codable {
     let total_count: Int
     let items: [T]

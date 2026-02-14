@@ -69,7 +69,6 @@ class RateLimitTracker: ObservableObject {
     }
 
     private func saveState() {
-        // Simple serialization for dictionary keys using rawValue
         let rawUsage = Dictionary(uniqueKeysWithValues: usage.map { ($0.key.rawValue, $0.value) })
         defaults.set(rawUsage, forKey: kUsage)
         defaults.set(hourStartTime, forKey: kStartTime)
@@ -96,7 +95,6 @@ class RateLimitTracker: ObservableObject {
     }
 
     var warningLevel: WarningLevel {
-        // Return worst case
         let bbLevel = level(for: .bitbucket)
         let ghLevel = level(for: .github)
         let glLevel = level(for: .gitlab)
@@ -136,7 +134,6 @@ class RateLimitTracker: ObservableObject {
         }
     }
 
-    // Header parsing
     nonisolated func track(response: HTTPURLResponse, provider: ProviderType) {
         Task { @MainActor in
             let isRateLimitResponse = response.statusCode == 429 || (provider == .github && response.statusCode == 403)
@@ -148,7 +145,6 @@ class RateLimitTracker: ObservableObject {
         }
     }
 
-    // UI Helpers
     var callsThisHour: Int {
         usage.values.reduce(0, +)
     }

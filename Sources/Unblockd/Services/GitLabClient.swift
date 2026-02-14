@@ -173,8 +173,6 @@ class GitLabClient: GitProvider {
         return try await request(url: requestUrl)
     }
 
-    // MARK: - Helpers
-
     private func fetchApprovalState(projectID: Int, mrIID: Int) async throws -> GitLabApprovalState? {
         let url = baseURL
              .appendingPathComponent("projects")

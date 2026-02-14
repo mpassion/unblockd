@@ -234,8 +234,6 @@ class BitbucketClient: GitProvider, @unchecked Sendable {
         return try JSONDecoder().decode(BitbucketUser.self, from: data)
     }
 
-    // MARK: - GitProvider Conformance
-
     var type: ProviderType { .bitbucket }
 
     private var cachedUserUUID: String?
