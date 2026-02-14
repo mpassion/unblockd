@@ -51,6 +51,28 @@ enum AppConfig {
     enum Timeouts {
         static let bitbucketPagingDelayNanoseconds: UInt64 = 200_000_000
     }
+
+    enum Links {
+        private static let websiteBase = "https://unblockd.app"
+        private static let issueNewBase = "https://github.com/mpassion/unblockd/issues/new"
+
+        static func website(source: String? = nil) -> URL {
+            guard let source, !source.isEmpty else {
+                return URL(string: websiteBase)!
+            }
+            return withSource(base: websiteBase, source: source)
+        }
+
+        static func issueNew() -> URL {
+            URL(string: issueNewBase)!
+        }
+
+        private static func withSource(base: String, source: String) -> URL {
+            var components = URLComponents(string: base)!
+            components.queryItems = (components.queryItems ?? []) + [URLQueryItem(name: "source", value: source)]
+            return components.url!
+        }
+    }
 }
 
 enum BadgeCountMode: String, CaseIterable, Identifiable {

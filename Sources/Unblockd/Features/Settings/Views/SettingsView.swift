@@ -115,6 +115,9 @@ struct SettingsView: View {
                         }
                         .font(.system(size: 10))
                         .foregroundStyle(Color.secondary)
+
+                        FooterSupportLinks()
+                            .padding(.top, 4)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.bottom, 10)
@@ -581,6 +584,29 @@ struct ActiveReposSection: View {
                 }
                 .ubCard()
             }
+        }
+    }
+}
+
+struct FooterSupportLinks: View {
+    private let websiteURL = AppConfig.Links.website(source: "app-preferences")
+    private let issueURL = AppConfig.Links.issueNew()
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Link("Website", destination: websiteURL)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(Color.secondary)
+                .buttonStyle(.plain)
+
+            Text("·")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(Color.secondary.opacity(0.7))
+
+            Link("Report Issue", destination: issueURL)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(Color.secondary)
+                .buttonStyle(.plain)
         }
     }
 }
