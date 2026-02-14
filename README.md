@@ -200,6 +200,15 @@ If macOS blocks app launch:
 2. Confirm **Open** in the dialog
 3. If needed: `System Settings → Privacy & Security → Open Anyway`
 
+Terminal fallback (if you prefer CLI):
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Unblockd.app
+open -a "Unblockd"
+```
+
+`open -a` starts the app, but the key step is removing quarantine (or approving once in Privacy & Security).
+
 **Note on Keychain Access:** macOS may prompt you to allow Unblockd to access your Keychain when you first connect a provider. This is normal - click **Allow** to securely store your API tokens. You may see this prompt multiple times (once per provider).
 
 ---
